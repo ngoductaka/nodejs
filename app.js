@@ -7,7 +7,9 @@ app.use(bodyParser.json());
 // for parsing application/xwww-
 app.use(bodyParser.urlencoded({ extended: true })); 
 // 
-const models = require('./models');
+// const models = require('./models');
+const Models = require('./Models');
+
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -31,57 +33,79 @@ app.use('/ducdn', function (req, res, next) {
             res.send("form err");
             return 1;
         }
-    }else if('GET'===req.method){
-        
-    }else if('PUT'===req.method){
-        // console.log(' method: ',req.method)
-    }else if('DELETE'===req.method){
-        // console.log(' method: ',req.method)
     }
+    else if('GET'===req.method){ }
+    else if('PUT'===req.method){ 
+        const id = req.body.id,
+              name = req.body.name,
+              cost = req.body.cost;
+
+        if(!id) {
+            res.send("cant read id propoty ");
+            return 1;
+        }
+        else if (!name&&!cost){
+            res.send("name and cost is empty ");
+            return 1;
+        }
+    }
+    else if('DELETE'===req.method){  }
     next()
 })
 // find one
 app.get('/ducdn/:id',function(req, res){
-    const getData = models.getData;
+    const getData = Models.getData;
     getData(req.params.id) 
-    .then((data)=>{
-        res.json(data);
-        // console.log('get',data);
-    }).catch((err)=>console.log(err))
+    .then(  data =>  res.json(data)   )
+    .catch( err  =>  console.log(err) )
 });
 // find all
 app.get('/ducdn',function(req, res){
-    const getData = models.getData;
+    const getData = Models.getData;
     getData(req.params.id) 
-    .then((data)=>{
-        res.json(data);
-        // console.log('get',data);
-    }).catch((err)=>console.log(err))
+    .then(  data => res.json(data)   )
+    .catch( err  => console.log(err) )
 });
 // creact one
 app.post('/ducdn',function(req, res){
-    const insertData = models.insertData;
-    const name = req.body.name
-    const cost = +req.body.cost
-    insertData({
+    const saveData = Models.saveData,
+     name = req.body.name,
+     cost = +req.body.cost;
+     saveData({
         "name":  name,
         "cost":  cost
-    });
+    })
+    .then(data=>{
+        console.log(data);
+        res.send(data);
+    })
+    
     // res.redirect("http://localhost:3000/dnd");
-    return 1;    
 });
 // delete
-app.delete('/ducdn',function(req, res){
-    const deleteItem = models.deleteItem;
-    deleteItem(req.body.id);
-    return 1;
-    // console.log(req.body.id);
+app.delete('/ducdn/:id',function(req, res){
+    const deleteData = Models.deleteData;
+     deleteData(req.params.id)
+     .then(data=>res.send(data))
+    // console.log(req.params.id);
 });
 // update
 app.put('/ducdn',function(req, res){
-    const deleteItem = models.deleteItem;
-    deleteItem(req.body.id);
-    console.log(req.body.id);
+    // console.log(req.body);
+    const updateData = Models.updateData;
+    const id = req.body.id
+    const name = req.body.name
+    const cost = req.body.cost
+    updateData({
+        "id": id,
+        "name": name,
+        "cost": cost
+    })
+    .then(data=>{
+        console.log(data);
+        res.send(data);
+    })
+    // res.send(1);
 });
 
 //   
