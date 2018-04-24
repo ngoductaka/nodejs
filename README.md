@@ -8,7 +8,7 @@
 ` yarn start_sql`
 # use
 ## use with mongo 
-http://localhost:5001/ducdn         </br>`method: GET    => get all data `</br>
+http://localhost:5001/ducdn          `method: GET    => get all data `</br>
 http://localhost:5001/ducdn/id      </br>`method: GET    => get item have id = id` </br>
 http://localhost:5001/ducdn         </br>`method: Post   => with body: { "name": "blackberry 9700", "cost": 1234} => save  data`</br>
 http://localhost:5001/ducdn         </br>`method: PUT   => with body: {"id":1, "name": "blackberry 9700", "cost": 1234} => update  data`</br>
