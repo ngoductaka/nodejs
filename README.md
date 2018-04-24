@@ -1,9 +1,10 @@
 # to install node_module
 ` yarn ` 
 # to start
-## start with mongoo
+## start with mongoo `use mlap`
 ` yarn start_mongo`
-## start with postgresql
+## start with postgresql `use local databse`
+`if use postgresql need install postgresql have same config in .env file`
 ` yarn start_sql`
 # use 
 ## use with mongo 
