@@ -24,3 +24,4 @@ var mapSchema = mongoose.Schema({
 var phone = mongoose.model('phone', mapSchema);
 // console.log(phone);
 module.exports = phone;
+// export default phone 

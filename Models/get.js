@@ -5,7 +5,12 @@ const phone = require('./connect');
 //     return phone.find(query);
 // }
 
-module.exports = (id=null) => {
+// module.exports = (id=null) => {
+//     const query = id?{"id":id}:null
+//     return phone.find(query);
+// };
+
+module.exports = async (id=null) => {
     const query = id?{"id":id}:null
-    return phone.find(query);
+    return await phone.find(query);
 };

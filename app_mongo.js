@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
+
 // 
 bodyParser = require('body-parser'),
-// for parsing application/json
-app.use(bodyParser.json()); 
-// for parsing application/xwww-
-app.use(bodyParser.urlencoded({ extended: true })); 
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json 
+app.use(bodyParser.json())
 // 
 // const models = require('./models');
 const Models = require('./Models');
@@ -60,11 +62,15 @@ app.get('/ducdn/:id',function(req, res){
     .catch( err  =>  console.log(err) )
 });
 // find all
-app.get('/ducdn',function(req, res){
-    const getData = Models.getData;
-    getData(req.params.id) 
-    .then(  data => res.json(data)   )
-    .catch( err  => console.log(err) )
+app.get('/ducdn',async (req, res)=> {
+    try {
+        const getData = Models.getData;
+        let data = await getData(req.params.id) ;
+        res.json(data);
+    }
+    catch(err){
+        console.log("err",err);
+    }
 });
 // creact one
 app.post('/ducdn',function(req, res){
@@ -109,4 +115,4 @@ app.put('/ducdn',function(req, res){
 });
 
 //   
-app.listen(5000)
+app.listen(process.env.POST_mongo,()=>console.log("run with mongoo on post " +process.env.POST_mongo ))
